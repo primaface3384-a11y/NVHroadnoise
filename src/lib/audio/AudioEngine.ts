@@ -41,7 +41,7 @@ export class AudioEngine {
     this.gainNode.gain.value = 0
 
     try {
-      await this.context.audioWorklet.addModule('/worklet/audio-processor.js')
+      await this.context.audioWorklet.addModule('/NVHroadnoise/worklet/audio-processor.js')
       this.workletNode = new AudioWorkletNode(this.context, 'audio-processor')
       this.workletNode.port.onmessage = (event) => {
         const data = event.data

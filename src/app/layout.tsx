@@ -25,7 +25,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="ko">
       <head>
-        <link rel="apple-touch-icon" href="/icons/icon-192x192.png" />
+        <link rel="apple-touch-icon" href="/NVHroadnoise/icons/icon-192x192.png" />
       </head>
       <body className="min-h-screen bg-slate-950">
         <main>{children}</main>

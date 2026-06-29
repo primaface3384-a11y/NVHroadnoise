@@ -1,15 +1,16 @@
 const CACHE_NAME = 'nvh-app-v1'
+const BASE_PATH = '/NVHroadnoise'
 
 const PRECACHE_URLS = [
-  '/',
-  '/measure',
-  '/recordings',
-  '/report',
-  '/settings',
-  '/manifest.json',
-  '/worklet/audio-processor.js',
-  '/icons/icon-192x192.png',
-  '/icons/icon-512x512.png',
+  BASE_PATH + '/',
+  BASE_PATH + '/measure',
+  BASE_PATH + '/recordings',
+  BASE_PATH + '/report',
+  BASE_PATH + '/settings',
+  BASE_PATH + '/manifest.json',
+  BASE_PATH + '/worklet/audio-processor.js',
+  BASE_PATH + '/icons/icon-192x192.png',
+  BASE_PATH + '/icons/icon-512x512.png',
 ]
 
 self.addEventListener('install', (event) => {
@@ -44,7 +45,7 @@ self.addEventListener('fetch', (event) => {
               caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone))
               return response
             })
-            .catch(() => caches.match('/'))
+            .catch(() => caches.match(BASE_PATH + '/'))
       )
     )
     return
