@@ -30,7 +30,7 @@ export default function ReportPage() {
 
   return (
     <>
-      <Header title="PDF 리포트" subtitle="분석 결과를 PDF로 내보내기" />
+      <Header title="측정 보고서" subtitle="분석 결과를 PDF로 저장하거나 공유할 수 있습니다" />
       <div className="p-4">
         {loading ? (
           <div className="text-center text-slate-400 py-12">
@@ -38,8 +38,8 @@ export default function ReportPage() {
           </div>
         ) : recsWithAnalysis.length === 0 ? (
           <div className="text-center text-slate-400 py-12">
-            <p>분석 데이터가 있는 녹음이 없습니다</p>
-            <p className="text-sm mt-1">측정 화면에서 녹음을 먼저 진행하세요</p>
+            <p>저장된 측정 기록이 없습니다</p>
+            <p className="text-sm mt-1">소음 측정 화면에서 녹음 버튼을 눌러 저장하세요</p>
           </div>
         ) : (
           <div className="space-y-3">
@@ -59,7 +59,7 @@ export default function ReportPage() {
                   disabled={generating === rec.id}
                   className="bg-blue-600 hover:bg-blue-700 disabled:bg-slate-700 text-white text-sm px-4 py-2 rounded-lg ml-3 transition-colors"
                 >
-                  {generating === rec.id ? '생성 중...' : 'PDF'}
+                  {generating === rec.id ? '생성 중...' : 'PDF 저장'}
                 </button>
               </div>
             ))}

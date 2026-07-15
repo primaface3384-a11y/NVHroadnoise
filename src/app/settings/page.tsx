@@ -32,9 +32,12 @@ export default function SettingsPage() {
     <>
       <Header title="설정" />
       <div className="p-4 space-y-4">
+
+        {/* 기본 설정 */}
         <div className="bg-slate-800 rounded-xl p-4">
-          <label className="block text-sm text-slate-400 mb-2">
-            교정 오프셋 (dB)
+          <h3 className="text-sm font-medium text-slate-300 mb-3">마이크 보정</h3>
+          <label className="block text-xs text-slate-500 mb-2">
+            보정값 (dB) — 다른 소음계와 비교해 차이가 있을 때 입력하세요
           </label>
           <input
             type="number"
@@ -47,67 +50,82 @@ export default function SettingsPage() {
             }}
             className="w-full bg-slate-700 border border-slate-600 rounded-lg px-3 py-2 text-slate-200 text-sm"
           />
-          <p className="text-xs text-slate-500 mt-1">
-            교정된 소음계와 비교하여 차이값을 입력하세요
+          <p className="text-xs text-slate-600 mt-1">
+            기본값 0 · 스마트폰 마이크는 기기마다 차이가 있을 수 있습니다
           </p>
         </div>
 
+        {/* 앱으로 설치하기 */}
         <div className="bg-slate-800 rounded-xl p-4">
-          <label className="block text-sm text-slate-400 mb-2">FFT 크기</label>
-          <select
-            value={fftSize}
-            onChange={(e) => {
-              const v = parseInt(e.target.value)
-              setFftSize(v)
-              save('fftSize', v)
-            }}
-            className="w-full bg-slate-700 border border-slate-600 rounded-lg px-3 py-2 text-slate-200 text-sm"
-          >
-            <option value={2048}>2048 (낮은 해상도, 빠른 응답)</option>
-            <option value={4096}>4096 (보통)</option>
-            <option value={8192}>8192 (높은 해상도, 권장)</option>
-            <option value={16384}>16384 (최고 해상도)</option>
-          </select>
-        </div>
-
-        <div className="bg-slate-800 rounded-xl p-4">
-          <label className="block text-sm text-slate-400 mb-2">
-            윈도우 함수
-          </label>
-          <select
-            value={windowFn}
-            onChange={(e) => {
-              setWindowFn(e.target.value)
-              save('windowFunction', e.target.value)
-            }}
-            className="w-full bg-slate-700 border border-slate-600 rounded-lg px-3 py-2 text-slate-200 text-sm"
-          >
-            <option value="hann">Hann (권장)</option>
-            <option value="hamming">Hamming</option>
-            <option value="blackman-harris">Blackman-Harris</option>
-          </select>
-        </div>
-
-        <div className="bg-slate-800 rounded-xl p-4">
-          <h3 className="text-sm text-slate-400 mb-2">정보</h3>
-          <div className="text-sm text-slate-300 space-y-1">
-            <p>NVH 로드노이즈 분석기 v1.0.0</p>
-            <p className="text-slate-500">
-              본 앱은 차량 NVH 개발을 위한 현장 분석 도구입니다.
-            </p>
-            <p className="text-slate-500">
-              측정값은 참고용이며, 정밀 측정에는 교정된 측정 장비를 사용하세요.
-            </p>
+          <h3 className="text-sm font-medium text-slate-300 mb-3">앱으로 설치하는 방법</h3>
+          <div className="space-y-2">
+            <div className="flex items-start gap-3 text-sm text-slate-300">
+              <span className="bg-blue-600 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs shrink-0 mt-0.5">1</span>
+              <span>iPhone의 <span className="text-blue-400">Safari 브라우저</span>로 이 페이지를 열어주세요</span>
+            </div>
+            <div className="flex items-start gap-3 text-sm text-slate-300">
+              <span className="bg-blue-600 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs shrink-0 mt-0.5">2</span>
+              <span>하단의 <span className="text-blue-400">공유 버튼 ⬆</span>을 탭하세요</span>
+            </div>
+            <div className="flex items-start gap-3 text-sm text-slate-300">
+              <span className="bg-blue-600 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs shrink-0 mt-0.5">3</span>
+              <span><span className="text-blue-400">&quot;홈 화면에 추가&quot;</span>를 선택하세요</span>
+            </div>
+            <div className="flex items-start gap-3 text-sm text-slate-300">
+              <span className="bg-blue-600 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs shrink-0 mt-0.5">4</span>
+              <span>홈 화면에 아이콘이 생기고 앱처럼 실행됩니다</span>
+            </div>
           </div>
         </div>
 
+        {/* 고급 설정 */}
         <div className="bg-slate-800 rounded-xl p-4">
-          <h3 className="text-sm text-slate-400 mb-2">PWA 설치 방법</h3>
-          <div className="text-sm text-slate-300 space-y-1">
-            <p>1. Safari로 이 페이지를 엽니다</p>
-            <p>2. 하단 공유 버튼(⬆)을 탭합니다</p>
-            <p>3. &quot;홈 화면에 추가&quot;를 선택합니다</p>
-            <p>4. 홈 화면에서 앱처럼 실행됩니다</p>
+          <h3 className="text-sm font-medium text-slate-300 mb-3">고급 설정 <span className="text-xs font-normal text-slate-500">(일반적으로 변경 불필요)</span></h3>
+          <div className="space-y-3">
+            <div>
+              <label className="block text-xs text-slate-500 mb-1">분석 정밀도</label>
+              <select
+                value={fftSize}
+                onChange={(e) => {
+                  const v = parseInt(e.target.value)
+                  setFftSize(v)
+                  save('fftSize', v)
+                }}
+                className="w-full bg-slate-700 border border-slate-600 rounded-lg px-3 py-2 text-slate-200 text-sm"
+              >
+                <option value={2048}>빠른 응답 (정밀도 낮음)</option>
+                <option value={4096}>보통</option>
+                <option value={8192}>높은 정밀도 (권장)</option>
+                <option value={16384}>최고 정밀도 (느릴 수 있음)</option>
+              </select>
+            </div>
+            <div>
+              <label className="block text-xs text-slate-500 mb-1">분석 방법</label>
+              <select
+                value={windowFn}
+                onChange={(e) => {
+                  setWindowFn(e.target.value)
+                  save('windowFunction', e.target.value)
+                }}
+                className="w-full bg-slate-700 border border-slate-600 rounded-lg px-3 py-2 text-slate-200 text-sm"
+              >
+                <option value="hann">Hann (권장)</option>
+                <option value="hamming">Hamming</option>
+                <option value="blackman-harris">Blackman-Harris</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        {/* 앱 정보 */}
+        <div className="bg-slate-800 rounded-xl p-4">
+          <h3 className="text-sm font-medium text-slate-300 mb-2">앱 정보</h3>
+          <div className="text-sm text-slate-500 space-y-1">
+            <p>차량 소음 분석기 v1.0.0</p>
+            <p>주행 중 발생하는 소음을 실시간으로 분석하는 도구입니다.</p>
+            <p className="text-slate-600 text-xs mt-2">
+              측정값은 참고용이며, 정밀 측정에는 교정된 측정 장비를 사용하세요.
+            </p>
           </div>
         </div>
       </div>

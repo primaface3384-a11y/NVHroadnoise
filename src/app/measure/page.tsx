@@ -60,7 +60,7 @@ export default function MeasurePage() {
   return (
     <>
       {showUnlock && <IOSAudioUnlock onUnlocked={handleUnlock} />}
-      <Header title="실시간 측정" subtitle="NVH 로드노이즈 분석" />
+      <Header title="소음 측정" subtitle="버튼을 눌러 측정 결과를 저장할 수 있습니다" />
 
       <div className="p-4 space-y-4">
         <div className="bg-slate-800 rounded-xl p-4">
@@ -109,7 +109,7 @@ export default function MeasurePage() {
         </div>
 
         <div className="bg-slate-800 rounded-xl p-4">
-          <h3 className="text-sm text-slate-400 mb-2">주파수 스펙트럼</h3>
+          <h3 className="text-sm text-slate-400 mb-2">소리 주파수 분포 <span className="text-xs text-slate-600">(낮은 음 → 높은 음)</span></h3>
           <SpectrumChart
             data={result?.spectrum ?? null}
             sampleRate={engine.getSampleRate()}
@@ -120,7 +120,7 @@ export default function MeasurePage() {
         </div>
 
         <div className="bg-slate-800 rounded-xl p-4">
-          <h3 className="text-sm text-slate-400 mb-2">스펙트로그램</h3>
+          <h3 className="text-sm text-slate-400 mb-2">시간에 따른 소음 변화 <span className="text-xs text-slate-600">(밝을수록 강한 소음)</span></h3>
           <Spectrogram
             buffer={engine.getSpectrogramBuffer()}
             sampleRate={engine.getSampleRate()}
@@ -130,7 +130,7 @@ export default function MeasurePage() {
         </div>
 
         <div className="bg-slate-800 rounded-xl p-4">
-          <h3 className="text-sm text-slate-400 mb-2">1/3 옥타브 밴드</h3>
+          <h3 className="text-sm text-slate-400 mb-2">주파수 대역별 소음 크기</h3>
           <OctaveBandChart
             bands={result?.octaveBands ?? []}
             width={600}
@@ -140,7 +140,7 @@ export default function MeasurePage() {
 
         {result && (
           <div className="bg-slate-800 rounded-xl p-4">
-            <h3 className="text-sm text-slate-400 mb-2">NVH 소음 분류</h3>
+            <h3 className="text-sm text-slate-400 mb-2">소음 유형 분석</h3>
             <NoiseCategory categories={result.categories} />
           </div>
         )}

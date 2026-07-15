@@ -23,7 +23,7 @@ export default function RecordingsPage() {
 
   return (
     <>
-      <Header title="녹음 목록" subtitle="저장된 측정 데이터" />
+      <Header title="측정 기록" subtitle="저장된 소음 측정 결과" />
       <div className="p-4">
         {loading ? (
           <div className="text-center text-slate-400 py-12">
@@ -35,8 +35,8 @@ export default function RecordingsPage() {
               <rect x="9" y="1" width="6" height="12" rx="3" />
               <path d="M19 10v2a7 7 0 01-14 0v-2M12 19v4M8 23h8" />
             </svg>
-            <p>녹음된 데이터가 없습니다</p>
-            <p className="text-sm mt-1">측정 화면에서 녹음을 시작하세요</p>
+            <p>저장된 측정 기록이 없습니다</p>
+            <p className="text-sm mt-1">소음 측정 화면에서 녹음 버튼을 눌러 저장하세요</p>
           </div>
         ) : (
           <div className="space-y-3">
