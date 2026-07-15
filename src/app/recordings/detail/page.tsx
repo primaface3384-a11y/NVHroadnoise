@@ -7,7 +7,7 @@ import Header from '@/components/layout/Header'
 import OctaveBandChart from '@/components/visualization/OctaveBandChart'
 import NoiseCategory from '@/components/visualization/NoiseCategory'
 import type { RecordingMetadata } from '@/types/recording'
-import { SEVERITY_LABELS } from '@/types/nvh'
+import { SEVERITY_LABELS, SEVERITY_COLORS } from '@/types/nvh'
 
 function RecordingDetailContent() {
   const searchParams = useSearchParams()
@@ -84,53 +84,56 @@ function RecordingDetailContent() {
         {a && (
           <>
             <div className="bg-slate-800 rounded-xl p-4">
-              <h3 className="text-sm text-slate-400 mb-3">종합 소음 수준</h3>
+              <h3 className="text-sm text-slate-400 mb-3">측정 결과 요약</h3>
               <div className="grid grid-cols-3 gap-4 text-center">
                 <div>
                   <div className="text-2xl font-bold text-blue-400">
                     {a.overallSPL_A.toFixed(1)}
                   </div>
-                  <div className="text-xs text-slate-400">종합 dB(A)</div>
+                  <div className="text-xs text-slate-400 mt-0.5">평균 소음</div>
+                  <div className="text-xs text-slate-600">dB(A)</div>
                 </div>
                 <div>
                   <div className="text-2xl font-bold text-orange-400">
                     {a.peakSPL.toFixed(1)}
                   </div>
-                  <div className="text-xs text-slate-400">최대 dB</div>
+                  <div className="text-xs text-slate-400 mt-0.5">최대 소음</div>
+                  <div className="text-xs text-slate-600">dB</div>
                 </div>
                 <div>
                   <div className="text-2xl font-bold text-green-400">
                     {a.leqSPL.toFixed(1)}
                   </div>
-                  <div className="text-xs text-slate-400">Leq dB(A)</div>
+                  <div className="text-xs text-slate-400 mt-0.5">등가 소음</div>
+                  <div className="text-xs text-slate-600">dB(A)</div>
                 </div>
               </div>
             </div>
 
             <div className="bg-slate-800 rounded-xl p-4">
-              <h3 className="text-sm text-slate-400 mb-2">1/3 옥타브 밴드</h3>
+              <h3 className="text-sm text-slate-400 mb-2">주파수 대역 분석</h3>
               <OctaveBandChart bands={a.octaveBands} width={600} height={200} />
             </div>
 
             <div className="bg-slate-800 rounded-xl p-4">
-              <h3 className="text-sm text-slate-400 mb-2">NVH 소음 분류</h3>
+              <h3 className="text-sm text-slate-400 mb-2">소음 유형 분석</h3>
               <NoiseCategory categories={a.categories} />
             </div>
 
             <div className="bg-slate-800 rounded-xl p-4">
-              <h3 className="text-sm text-slate-400 mb-3">분석 소견</h3>
+              <h3 className="text-sm text-slate-400 mb-3">분석 결과</h3>
               <div className="space-y-2 text-sm text-slate-300">
                 {a.categories
                   .filter((c) => c.severity !== 'low')
                   .map((c) => (
                     <p key={c.category}>
-                      · {c.label}이(가) {c.dominantFrequency.toFixed(0)}Hz에서{' '}
-                      {SEVERITY_LABELS[c.severity]} 수준(
-                      {c.level_dBA.toFixed(1)} dBA)으로 감지됨
+                      · <span className="text-slate-200 font-medium">{c.label}</span>이(가){' '}
+                      <span style={{ color: SEVERITY_COLORS[c.severity] }}>{SEVERITY_LABELS[c.severity]}</span> 수준으로 감지됨
+                      <span className="text-slate-500 text-xs ml-1">({c.level_dBA.toFixed(1)} dBA)</span>
                     </p>
                   ))}
                 {a.categories.every((c) => c.severity === 'low') && (
-                  <p>· 전반적 소음 수준이 양호합니다.</p>
+                  <p>· 측정된 모든 소음 유형이 양호한 수준입니다.</p>
                 )}
               </div>
             </div>

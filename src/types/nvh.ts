@@ -27,9 +27,9 @@ export interface NVHCategoryDefinition {
 }
 
 export const SEVERITY_LABELS: Record<Severity, string> = {
-  low: '낮음',
-  moderate: '보통',
-  high: '높음',
+  low: '양호',
+  moderate: '주의',
+  high: '경고',
   critical: '심각',
 }
 

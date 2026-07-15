@@ -3,8 +3,8 @@ import './globals.css'
 import BottomNav from '@/components/layout/BottomNav'
 
 export const metadata: Metadata = {
-  title: 'NVH 로드노이즈 분석기',
-  description: '자동차 로드노이즈 NVH 실시간 분석 도구',
+  title: '차량 소음 분석기',
+  description: '주행 중 발생하는 차량 소음을 실시간으로 분석하는 도구',
   manifest: '/manifest.json',
   appleWebApp: {
     capable: true,

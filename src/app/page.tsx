@@ -17,24 +17,35 @@ export default function HomePage() {
     setShowUnlock(false)
   }
 
+  const spl = engine.analysisResult?.overallSPL_A ?? null
+  const splStatus = getSPLStatus(spl)
+
   return (
     <>
       {showUnlock && <IOSAudioUnlock onUnlocked={handleUnlock} />}
-      <Header title="NVH 로드노이즈 분석기" subtitle="실시간 차량 소음 분석" />
+      <Header title="차량 소음 분석기" subtitle="실시간 소음 측정 및 분석" />
 
       <div className="p-4 space-y-4">
         <div className="bg-slate-800 rounded-xl p-4">
           <h2 className="text-sm font-medium text-slate-400 mb-2">
-            종합 소음 수준
+            현재 소음 수준
           </h2>
-          <div className="text-4xl font-bold text-center mb-2">
-            <span className="text-blue-400">
-              {engine.analysisResult
-                ? engine.analysisResult.overallSPL_A.toFixed(1)
-                : '--.-'}
-            </span>
-            <span className="text-lg text-slate-400 ml-1">dB(A)</span>
+          <div className="flex items-end justify-center gap-3 mb-1">
+            <div className="text-4xl font-bold text-blue-400">
+              {spl !== null ? spl.toFixed(1) : '--.-'}
+            </div>
+            <div className="pb-1 text-lg text-slate-400">dB(A)</div>
           </div>
+          {splStatus && (
+            <div className="text-center mb-2">
+              <span
+                className="text-sm font-medium px-3 py-0.5 rounded-full"
+                style={{ color: splStatus.color, backgroundColor: splStatus.color + '20' }}
+              >
+                {splStatus.label}
+              </span>
+            </div>
+          )}
           <SPLMeter
             level={engine.analysisResult?.overallSPL_A ?? -60}
             peak={engine.analysisResult?.peakSPL ?? -60}
@@ -43,12 +54,15 @@ export default function HomePage() {
             min={-60}
             max={0}
           />
+          <p className="text-xs text-slate-600 text-center mt-2">
+            참고: 조용한 방 ~-45 · 일상 대화 ~-30 · 도로변 ~-20
+          </p>
         </div>
 
         {engine.analysisResult && (
           <div className="bg-slate-800 rounded-xl p-4">
             <h2 className="text-sm font-medium text-slate-400 mb-3">
-              NVH 소음 분류
+              소음 유형 분석
             </h2>
             <NoiseCategory categories={engine.analysisResult.categories} />
           </div>
@@ -60,23 +74,33 @@ export default function HomePage() {
             className="bg-blue-600 hover:bg-blue-700 text-white rounded-xl p-4 text-center transition-colors"
           >
             <MicIcon />
-            <span className="block text-sm mt-2">상세 측정</span>
+            <span className="block text-sm mt-2">소음 측정 및 녹음</span>
           </Link>
           <Link
             href="/recordings"
             className="bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-xl p-4 text-center transition-colors"
           >
             <ListIcon />
-            <span className="block text-sm mt-2">녹음 기록</span>
+            <span className="block text-sm mt-2">측정 기록 보기</span>
           </Link>
         </div>
 
         <p className="text-xs text-slate-500 text-center mt-6">
-          본 측정값은 참고용이며, 정밀 측정에는 교정된 측정 마이크를 사용하세요.
+          측정값은 참고용입니다. 정밀 측정에는 교정된 장비를 사용하세요.
         </p>
       </div>
     </>
   )
+}
+
+function getSPLStatus(spl: number | null): { label: string; color: string } | null {
+  if (spl === null) return null
+  if (spl < -50) return { label: '매우 조용함', color: '#22c55e' }
+  if (spl < -40) return { label: '조용함', color: '#84cc16' }
+  if (spl < -28) return { label: '보통', color: '#eab308' }
+  if (spl < -18) return { label: '다소 시끄러움', color: '#f97316' }
+  if (spl < -8) return { label: '시끄러움', color: '#ef4444' }
+  return { label: '매우 시끄러움', color: '#dc2626' }
 }
 
 function MicIcon() {
